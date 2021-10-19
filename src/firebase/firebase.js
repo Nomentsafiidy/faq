@@ -58,7 +58,7 @@ export const useLoadUsers = () => {
     return users;
 };
 
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 //Fire Auth
 export const signUp = async (user) => {

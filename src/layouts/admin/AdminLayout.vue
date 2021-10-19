@@ -9,8 +9,7 @@
             </div>
             <div class="slot_end">
                 <div @click.prevent.stop="toggleUserAction" class="avatar">
-                    <!-- <img [src]="'https://eu.ui-avatars.com/api/?name=' + user.pseudo" alt="" srcset="" /> -->
-                    <img src="https://eu.ui-avatars.com/api/?name=a" alt="" srcset="" />
+                    <img :src="'https://eu.ui-avatars.com/api/?name=' + user.pseudo" alt="" srcset="" />
 
                     <div v-if="showUserAction" class="user_action">
                         <a @click.prevent.stop="toggleUserAction" class="user_action_item text_dark">
@@ -30,7 +29,9 @@
 </template>
 
 <script>
-import { logOut } from '../../firebase/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth, logOut, getUserById } from '../../firebase/firebase';
+import { User } from '../../models/user';
 
 export default {
     data() {
@@ -47,6 +48,18 @@ export default {
             await logOut();
             this.$router.push('/home');
         },
+    },
+    mounted() {
+        onAuthStateChanged(auth, async (currentUser) => {
+            if (currentUser) {
+                const tmpUser = await getUserById(currentUser.uid);
+                if (tmpUser) {
+                    this.user = new User(tmpUser);
+                }
+            } else {
+                this.user = null;
+            }
+        });
     },
 };
 </script>
