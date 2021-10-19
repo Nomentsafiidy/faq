@@ -25,6 +25,7 @@ export class ModelBase {
                 }
             }
             if (typeof obj == 'object') {
+                console.log('object asign');
                 Object.assign(this, obj);
             } else {
                 console.warn('[HibouLib.ModalBase - instanciate] This variable is not an object:', obj);
@@ -44,7 +45,7 @@ export class ModelBase {
             column;
         for (column in this) {
             //console.debug('[ModelBase - getProperties] column:', column);
-            if (this.hasOwnProperty(column) && !(this[column] instanceof ModelBase)) {
+            if (!(this[column] instanceof ModelBase)) {
                 //cconsole.debug('[ModelBase - getProperties]', column, this[column]);
                 properties[column] = this[column];
             }

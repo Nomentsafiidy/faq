@@ -1,7 +1,9 @@
 import * as firebaseApp from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore/lite';
-
+import { getFirestore, collection, getDoc, doc, setDoc } from 'firebase/firestore/lite';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { ref, onUnmounted } from 'vue';
+
+import { User } from '../models/user';
 
 const config = {
     apiKey: 'AIzaSyCc3mYYqxbIdVjRGbJBu8o_IYJhCrmpkkM',
@@ -17,24 +19,26 @@ const app = firebaseApp.initializeApp(config);
 
 // const db = app.firestore();
 const db = getFirestore(app);
+
 const usersCollection = collection(db, 'user');
 
 export const saveUserToCollection = async (user) => {
-    try {
-        const docRef = await addDoc(collection(db, 'user'), {
-            ...user,
-        });
-        console.log('Document written with ID: ', docRef.id);
-    } catch (e) {
-        console.error('Error adding document: ', e);
-    }
+    // const docRef = await addDoc(collection(db, 'user'), {
+    //     ...user,
+    // });
+    await setDoc(doc(db, 'users', user.id), {
+        ...user,
+    });
 };
 
-export const getUser = async (id) => {
-    console.log(id);
-    const snapshot = await getDocs(usersCollection);
-    const cityList = snapshot.docs.map((doc) => doc.data());
-    return cityList;
+export const getUserById = async (id) => {
+    const docRef = doc(db, 'users', id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return { id: docSnap.id, ...docSnap.data() };
+    } else {
+        return null;
+    }
 };
 
 export const updateUser = (id, user) => {
@@ -52,4 +56,25 @@ export const useLoadUsers = () => {
     });
     onUnmounted(close);
     return users;
+};
+
+const auth = getAuth(app);
+
+//Fire Auth
+export const signUp = async (user) => {
+    const userCredential = await createUserWithEmailAndPassword(auth, user.email, user.password);
+    user.id = userCredential.user.uid;
+    delete user.password;
+    await saveUserToCollection(user);
+    return user;
+};
+
+export const signIn = async (login) => {
+    const userCredential = await signInWithEmailAndPassword(auth, login.email, login.password);
+    if (userCredential) {
+        const tmpUser = await getUserById(userCredential.user.uid);
+        if (tmpUser) {
+            return new User(tmpUser);
+        }
+    }
 };

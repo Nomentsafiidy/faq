@@ -1,30 +1,59 @@
 <template>
     <div>
-        <h3>Login</h3>
-        <form @submit.prevent="pressed">
-            <div class="login">
-                <input type="text" placeholder="login" v-model="email" />
-            </div>
-            <div class="password">
-                <input type="password" placeholder="password" v-model="password" />
-            </div>
-            <button>Login</button>
-        </form>
-        <div class="error" v-if="error">{{ error.message }}</div>
+        <ProgessBar :loading="loading" />
+        <div class="l_container">
+            <h3>Login</h3>
+            <form @submit.prevent="onSignIn">
+                <div class="input_group">
+                    <input class="input" type="email" required placeholder="Email" v-model="login.email" />
+                </div>
+                <div class="input_group">
+                    <input class="input" type="password" required placeholder="Password" v-model="login.password" />
+                </div>
+                <button class="btn btn_primary">Login</button>
+            </form>
+            <Alert v-if="error" :message="error.message" :type="'error'" />
+        </div>
     </div>
 </template>
 
 <script>
+import ProgessBar from '../../../components/progress-bar/ProgressBar.vue';
+import Alert from '../../../components/alert/Alert.vue';
+import { signIn } from './../../../firebase/firebase';
+
 export default {
     data() {
         return {
-            email: '',
-            password: '',
+            login: {
+                email: '',
+                password: '',
+            },
             error: '',
+            loading: false,
         };
     },
+    components: {
+        ProgessBar,
+        Alert,
+    },
     methods: {
-        pressed() {
+        onSignIn: async function () {
+            try {
+                this.loading = true;
+                const user = await signIn(this.login);
+                this.loading = false;
+                if (user) {
+                    if (user.isAdmin) {
+                        this.$router.replace('/admin/home');
+                    } else {
+                        this.$router.replace('/home');
+                    }
+                }
+            } catch (error) {
+                this.error = error;
+                this.loading = false;
+            }
             //TODO
             // firebase
             //     .auth()
@@ -42,23 +71,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div {
-    color: inherit;
+.l_container {
+    width: 350px;
+    margin: 64px auto;
+}
+h3 {
+    font-size: 24px;
+    margin-bottom: 0.8em;
+    font-weight: bold;
 }
 input {
-    width: 400px;
-    padding: 30px;
-    margin: 20px;
-    font-size: 21px;
-}
-
-button {
-    width: 400px;
-    height: 75px;
-    font-size: 100%;
-}
-
-.error {
-    color: red;
+    width: 100%;
 }
 </style>

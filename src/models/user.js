@@ -9,6 +9,7 @@ export class User extends ModelBase {
 
     constructor(obj) {
         super(obj);
+        this.setProperties(obj);
         this.isAdmin = this.isAdmin ? this.isAdmin : false;
     }
 }
