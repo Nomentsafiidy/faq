@@ -7,7 +7,7 @@
                 </router-link>
                 <router-link class="nav_item" to="/admin/question">Questions</router-link>
             </div>
-            <div class="slot_end">
+            <div v-if="user" class="slot_end">
                 <div @click.prevent.stop.exact="toggleUserAction" class="avatar">
                     <img :src="'https://eu.ui-avatars.com/api/?name=' + user.pseudo" alt="" srcset="" />
 
