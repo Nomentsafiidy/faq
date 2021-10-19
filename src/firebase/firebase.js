@@ -1,6 +1,6 @@
 import * as firebaseApp from 'firebase/app';
 import { getFirestore, collection, getDoc, doc, setDoc } from 'firebase/firestore/lite';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { ref, onUnmounted } from 'vue';
 
 import { User } from '../models/user';
@@ -77,4 +77,8 @@ export const signIn = async (login) => {
             return new User(tmpUser);
         }
     }
+};
+
+export const logOut = async () => {
+    return await signOut(auth);
 };

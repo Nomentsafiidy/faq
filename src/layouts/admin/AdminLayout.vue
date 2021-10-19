@@ -8,9 +8,18 @@
                 <router-link class="nav_item" to="/admin/question">Questions</router-link>
             </div>
             <div class="slot_end">
-                <div class="avatar">
+                <div @click.prevent.stop="toggleUserAction" class="avatar">
                     <!-- <img [src]="'https://eu.ui-avatars.com/api/?name=' + user.pseudo" alt="" srcset="" /> -->
                     <img src="https://eu.ui-avatars.com/api/?name=a" alt="" srcset="" />
+
+                    <div v-if="showUserAction" class="user_action">
+                        <a @click.prevent.stop="toggleUserAction" class="user_action_item text_dark">
+                            Mon compte
+                        </a>
+                        <a @click.prevent.stop="signOut" class="user_action_item text_danger">
+                            Déconnexion
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,7 +30,25 @@
 </template>
 
 <script>
-export default {};
+import { logOut } from '../../firebase/firebase';
+
+export default {
+    data() {
+        return {
+            showUserAction: false,
+        };
+    },
+    methods: {
+        toggleUserAction() {
+            this.showUserAction = !this.showUserAction;
+        },
+        signOut: async function () {
+            this.toggleUserAction();
+            await logOut();
+            this.$router.push('/home');
+        },
+    },
+};
 </script>
 
 <style lang="scss" scope>
@@ -96,6 +123,40 @@ export default {};
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
+        }
+        .user_action {
+            z-index: 3;
+            position: absolute;
+            background: white;
+            right: 0px;
+            border-radius: 3px;
+            width: 200px;
+            top: calc(100% + 8px);
+            box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+            animation: appear 0.2s;
+            overflow: hidden;
+            .user_action_item {
+                height: 40px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                padding: 0 16px;
+                transition: all 0.4s;
+                &:hover {
+                    background: #dfdfdf;
+                }
+            }
+
+            @keyframes appear {
+                0% {
+                    // transform: translateX(200%);
+                    height: 0px;
+                }
+                100% {
+                    // transform: translateX(0);
+                    height: 80px;
+                }
+            }
         }
     }
 }
