@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <ProgessBar :loading="loading" />
+        <ProgessBar :loading="loading" />
         <div class="r_container">
             <h3>Register</h3>
             <form @submit.prevent="onSignUp">
@@ -17,68 +17,68 @@
             </form>
             <div class="error" v-if="error">
                 {{ error.message }}
-                </div>
-            <div class="alert alert_success">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad blanditiis, amet rerum quod fuga aliquid distinctio dignissimos, doloribus
-                corrupti incidunt iste deleniti. Tenetur eum ducimus deserunt sint fugit voluptas expedita.
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
 <script>
-export default {};
 // //components import
-// import ProgessBar from '/src/components/progress-bar/ProgressBar.vue';
+import ProgessBar from '../../../components/progress-bar/ProgressBar.vue';
+// import Alert from '../../../components/alert/Alert.vue';
 // //lib import
-// // import db from '/src/firebase/firebaseInit';
-// import firebase from 'firebase';
-// // require('firebase/auth');
+// // import db from '/src/firebase/fireba seInit';
+// import * as firebase from 'firebase/app';
+// import 'firebase/auth';
 // // models import
 // import { User } from '/src/models/user.js';
 
-// export default {
-//     data() {
-//         return {
-//             user: {
-//                 pseudo: '',
-//                 email: '',
-//                 password: '',
-//             },
-//             error: '',
-//             loading: false,
-//         };
-//     },
-//     components: {
-//         ProgessBar,
-//     },
-//     methods: {
-//         onSignUp() {
-//             this.loading = true;
-//             firebase
-//                 .auth()
-//                 .createUserWithEmailAndPassword(this.email, this.password)
-//                 .then(async (res) => {
-//                     console.log('res firebase create user =>', res);
-//                     const user = new User({
-//                         id: res.user?.uid,
-//                         ...this.user,
-//                     });
-//                     delete user.password;
-//                     const dbRes = await db
-//                         .collection('users')
-//                         .doc(user.id)
-//                         .set({
-//                             ...user,
-//                         });
-//                     console.log(dbRes);
-//                     this.loading = false;
-//                     // this.$router.replace({ name: 'secret' });
-//                 })
-//                 .catch((error) => (this.error = error));
-//         },
-//     },
-// };
+import { saveUserToCollection } from '../../../firebase/firebase';
+
+export default {
+    data() {
+        return {
+            user: {
+                pseudo: '',
+                email: '',
+                password: '',
+            },
+            error: '',
+            loading: false,
+        };
+    },
+    components: {
+        ProgessBar,
+    },
+    methods: {
+        onSignUp: async function () {
+            this.loading = true;
+            await saveUserToCollection({ ...this.user });
+            this.loading = false;
+            // firebase
+            //     .auth()
+            //     .createUserWithEmailAndPassword(this.email, this.password)
+            //     .then(async (res) => {
+            //         console.log('res firebase create user =>', res);
+            //         // const user = new User({
+            //         //     id: res.user?.uid,
+            //         //     ...this.user,
+            //         // });
+            //         // delete user.password;
+            //         // const dbRes = await db
+            //         //     .collection('users')
+            //         //     .doc(user.id)
+            //         //     .set({
+            //         //         ...user,
+            //         //     });
+            //         // console.log(dbRes);
+            //         // this.loading = false;
+            //         // this.$router.replace({ name: 'secret' });
+            //     })
+            //     .catch((error) => (this.error = error));
+        },
+    },
+};
 </script>
 
 <style lang="scss" scoped>
