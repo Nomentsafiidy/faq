@@ -12,7 +12,7 @@
                 <router-link class="nav_item" to="/login">login</router-link>
             </div>
             <div v-if="user" class="slot_end">
-                <div @click.prevent.stop.exact="toggleUserAction" class="avatar">
+                <button @click.prevent="toggleUserAction" class="avatar">
                     <img :src="'https://eu.ui-avatars.com/api/?name=' + user.pseudo" alt="" srcset="" />
 
                     <div v-if="showUserAction" class="user_action">
@@ -23,7 +23,7 @@
                             Déconnexion
                         </a>
                     </div>
-                </div>
+                </button>
             </div>
         </div>
         <div class="ul_body">
@@ -38,9 +38,10 @@ import { auth, logOut, getUserById } from '../../firebase/firebase';
 import { User } from '../../models/user';
 
 export default {
-    date() {
+    data() {
         return {
             user: undefined,
+            showUserAction: false,
         };
     },
     methods: {
