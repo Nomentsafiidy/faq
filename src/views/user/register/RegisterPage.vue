@@ -29,11 +29,14 @@
 
 <script>
 import * as firebase from 'firebase/app';
-import 'firebase/auth';
-
+// import 'firebase/auth';
+import db from './../../../firebase/firebaseInit';
+import { User } from '/src/models/user.js';
+// import {} from
 export default {
     data() {
         return {
+            pseudo: '',
             email: '',
             password: '',
             error: '',
@@ -41,14 +44,16 @@ export default {
     },
     methods: {
         onSignUp() {
-            firebase
-                .auth()
-                .createUserWithEmailAndPassword(this.email, this.password)
-                .then((res) => {
-                    console.log('here', res);
-                    // this.$router.replace({ name: 'secret' });
-                })
-                .catch((error) => (this.error = error));
+            console.log(new User({ pseudo: 'maizina' }));
+            // firebase
+            //     .auth()
+            //     .createUserWithEmailAndPassword(this.email, this.password)
+            //     .then((res) => {
+            //         console.log('here', res);
+            //         const user = new User({});
+            //         // this.$router.replace({ name: 'secret' });
+            //     })
+            //     .catch((error) => (this.error = error));
         },
     },
 };
