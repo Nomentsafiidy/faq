@@ -15,9 +15,8 @@
                 </div>
                 <button class="btn btn_primary" type="submit">Register</button>
             </form>
-            <div class="error" v-if="error">
-                {{ error.message }}
-            </div>
+            <Alert v-if="success" :message="'Success'" :type="'success'" />
+            <Alert v-if="error" :message="'error.message'" :type="'error'" />
         </div>
     </div>
 </template>
@@ -25,14 +24,7 @@
 <script>
 // //components import
 import ProgessBar from '../../../components/progress-bar/ProgressBar.vue';
-// import Alert from '../../../components/alert/Alert.vue';
-// //lib import
-// // import db from '/src/firebase/fireba seInit';
-// import * as firebase from 'firebase/app';
-// import 'firebase/auth';
-// // models import
-// import { User } from '/src/models/user.js';
-
+import Alert from '../../../components/alert/Alert.vue';
 import { saveUserToCollection } from '../../../firebase/firebase';
 
 export default {
@@ -43,12 +35,14 @@ export default {
                 email: '',
                 password: '',
             },
+            success: false,
             error: '',
             loading: false,
         };
     },
     components: {
         ProgessBar,
+        Alert,
     },
     methods: {
         onSignUp: async function () {

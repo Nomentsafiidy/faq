@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
 export default {
     data() {
         return {
@@ -27,16 +25,17 @@ export default {
     },
     methods: {
         pressed() {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(this.email, this.password)
-                .then((data) => {
-                    console.log(data);
-                    this.$router.replace({ name: 'secret' });
-                })
-                .catch((error) => {
-                    this.error = error;
-                });
+            //TODO
+            // firebase
+            //     .auth()
+            //     .signInWithEmailAndPassword(this.email, this.password)
+            //     .then((data) => {
+            //         console.log(data);
+            //         this.$router.replace({ name: 'secret' });
+            //     })
+            //     .catch((error) => {
+            //         this.error = error;
+            //     });
         },
     },
 };

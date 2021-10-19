@@ -12,9 +12,9 @@ export default {
     },
     computed: {
         alertClass() {
-            if (type === 'success') {
+            if (this.type === 'success') {
                 return 'alert_success';
-            } else if (type === 'error') {
+            } else if (this.type === 'error') {
                 return 'alter_error';
             }
             return '';
