@@ -7,7 +7,7 @@
         </div>
         <div class="r_container">
             <h3>Register</h3>
-            <form @submit.prevent="pressed">
+            <form @submit.prevent="onSignUp">
                 <div class="input_group">
                     <input class="input" type="email" v-model="email" placeholder="email" />
                 </div>
@@ -40,13 +40,13 @@ export default {
         };
     },
     methods: {
-        pressed() {
+        onSignUp() {
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(this.email, this.password)
-                .then(() => {
-                    console.log('here');
-                    this.$router.replace({ name: 'secret' });
+                .then((res) => {
+                    console.log('here', res);
+                    // this.$router.replace({ name: 'secret' });
                 })
                 .catch((error) => (this.error = error));
         },
