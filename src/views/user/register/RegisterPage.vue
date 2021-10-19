@@ -1,15 +1,14 @@
 <template>
-    <div>
+    <div class="r_container">
         <h3>Register</h3>
         <form @submit.prevent="pressed">
-            Register
-            <div class="email">
-                <input type="email" v-model="email" placeholder="email" />
+            <div class="input_group">
+                <input class="input" type="email" v-model="email" placeholder="email" />
             </div>
-            <div class="password">
-                <input type="password" v-model="password" placeholder="password" />
+            <div class="input_group">
+                <input class="input" type="password" v-model="password" placeholder="password" />
             </div>
-            <button type="submit">Register</button>
+            <button class="btn btn_primary" type="submit">Register</button>
         </form>
         <div class="error" v-if="error">{{ error.message }}</div>
     </div>
@@ -43,20 +42,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.error {
-    color: red;
-    font-size: 18px;
+.r_container {
+    width: 350px;
+    margin: 64px auto;
+}
+h3 {
+    font-size: 24px;
+    margin-bottom: 0.8em;
+    font-weight: bold;
 }
 input {
-    width: 400px;
-    padding: 30px;
-    margin: 20px;
-    font-size: 21px;
-}
-
-button {
-    width: 400px;
-    height: 75px;
-    font-size: 100%;
+    width: 100%;
 }
 </style>

@@ -3,3 +3,53 @@
     width: 652px;
     padding: 0 16px;
 }
+
+.btn {
+    border: none;
+    background: transparent;
+    color: black;
+    font-size: 14px;
+    line-height: 14px;
+    height: 38px;
+    padding: 0.6em 1.6em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn_primary {
+    color: white;
+    background: #45b5ff;
+}
+
+.btn_primary:hover {
+    background: #1486d1;
+}
+.btn_primary:disabled {
+    cursor: not-allowed;
+    background: #7faac7;
+}
+
+.input {
+    border: 1px #e5e5e5 solid;
+    background: transparent;
+    color: #333333;
+    font-size: 14px;
+    padding: 0.7em 1.1em;
+    border-radius: 3px;
+    &:focus {
+        outline-style: solid;
+    }
+}
+
+.input:focus-visible {
+    outline: none;
+}
+
+.input:focus {
+    border: 1px solid #45b5ff;
+}
+
+.input_group {
+    margin-bottom: 16px;
+}
