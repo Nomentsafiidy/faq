@@ -53,3 +53,21 @@
 .input_group {
     margin-bottom: 16px;
 }
+
+.alert {
+    font-size: 14px;
+    padding: 1.5em;
+    border-radius: 4px;
+    margin: 1em auto;
+    line-height: 18px;
+}
+
+.alert_success {
+    color: #3cb371;
+    border: 1px solid #3cb371;
+}
+
+.alter_error {
+    color: #ff0000;
+    border: 1px solid #ff0000;
+}
