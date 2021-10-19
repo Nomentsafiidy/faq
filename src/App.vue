@@ -3,12 +3,13 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div> -->
-    <div></div>
+    <!-- <div></div> -->
     <router-view />
 </template>
 
 <style lang="scss">
 @import url('./assets/scss/reset.scss');
+@import url('./assets/scss/style.scss');
 
 // #app {
 //     font-family: Avenir, Helvetica, Arial, sans-serif;
