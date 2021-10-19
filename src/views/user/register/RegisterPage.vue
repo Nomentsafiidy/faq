@@ -1,62 +1,84 @@
 <template>
     <div>
-        <div class="slider">
-            <div class="line"></div>
-            <div class="subline inc"></div>
-            <div class="subline dec"></div>
-        </div>
+        <!-- <ProgessBar :loading="loading" />
         <div class="r_container">
             <h3>Register</h3>
             <form @submit.prevent="onSignUp">
                 <div class="input_group">
-                    <input class="input" type="email" v-model="email" placeholder="email" />
+                    <input class="input" type="text" v-model="user.pseudo" placeholder="Pseudo" />
                 </div>
                 <div class="input_group">
-                    <input class="input" type="password" v-model="password" placeholder="password" />
+                    <input class="input" type="email" v-model="user.email" placeholder="Email" />
+                </div>
+                <div class="input_group">
+                    <input class="input" type="password" v-model="user.password" placeholder="Password" />
                 </div>
                 <button class="btn btn_primary" type="submit">Register</button>
             </form>
-            <!-- <div class="error" v-if="error">
+            <div class="error" v-if="error">
                 {{ error.message }}
-                </div> -->
+                </div>
             <div class="alert alert_success">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad blanditiis, amet rerum quod fuga aliquid distinctio dignissimos, doloribus
                 corrupti incidunt iste deleniti. Tenetur eum ducimus deserunt sint fugit voluptas expedita.
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
-import * as firebase from 'firebase/app';
-// import 'firebase/auth';
-import db from './../../../firebase/firebaseInit';
-import { User } from '/src/models/user.js';
-// import {} from
-export default {
-    data() {
-        return {
-            pseudo: '',
-            email: '',
-            password: '',
-            error: '',
-        };
-    },
-    methods: {
-        onSignUp() {
-            console.log(new User({ pseudo: 'maizina' }));
-            // firebase
-            //     .auth()
-            //     .createUserWithEmailAndPassword(this.email, this.password)
-            //     .then((res) => {
-            //         console.log('here', res);
-            //         const user = new User({});
-            //         // this.$router.replace({ name: 'secret' });
-            //     })
-            //     .catch((error) => (this.error = error));
-        },
-    },
-};
+export default {};
+// //components import
+// import ProgessBar from '/src/components/progress-bar/ProgressBar.vue';
+// //lib import
+// // import db from '/src/firebase/firebaseInit';
+// import firebase from 'firebase';
+// // require('firebase/auth');
+// // models import
+// import { User } from '/src/models/user.js';
+
+// export default {
+//     data() {
+//         return {
+//             user: {
+//                 pseudo: '',
+//                 email: '',
+//                 password: '',
+//             },
+//             error: '',
+//             loading: false,
+//         };
+//     },
+//     components: {
+//         ProgessBar,
+//     },
+//     methods: {
+//         onSignUp() {
+//             this.loading = true;
+//             firebase
+//                 .auth()
+//                 .createUserWithEmailAndPassword(this.email, this.password)
+//                 .then(async (res) => {
+//                     console.log('res firebase create user =>', res);
+//                     const user = new User({
+//                         id: res.user?.uid,
+//                         ...this.user,
+//                     });
+//                     delete user.password;
+//                     const dbRes = await db
+//                         .collection('users')
+//                         .doc(user.id)
+//                         .set({
+//                             ...user,
+//                         });
+//                     console.log(dbRes);
+//                     this.loading = false;
+//                     // this.$router.replace({ name: 'secret' });
+//                 })
+//                 .catch((error) => (this.error = error));
+//         },
+//     },
+// };
 </script>
 
 <style lang="scss" scoped>
@@ -71,51 +93,5 @@ h3 {
 }
 input {
     width: 100%;
-}
-
-.slider {
-    position: relative;
-    width: 100%;
-    height: 4px;
-    overflow-x: hidden;
-}
-
-.line {
-    position: absolute;
-    opacity: 0.4;
-    background: #4a8df8;
-    width: 150%;
-    height: 4px;
-}
-.subline {
-    position: absolute;
-    background: #4a8df8;
-    height: 4px;
-}
-.inc {
-    animation: increase 2s infinite;
-}
-.dec {
-    animation: decrease 2s 0.5s infinite;
-}
-@keyframes increase {
-    from {
-        left: -5%;
-        width: 5%;
-    }
-    to {
-        left: 130%;
-        width: 100%;
-    }
-}
-@keyframes decrease {
-    from {
-        left: -80%;
-        width: 80%;
-    }
-    to {
-        left: 110%;
-        width: 10%;
-    }
 }
 </style>
