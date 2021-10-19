@@ -3,7 +3,7 @@ import LoginPage from './../views/user/login/LoginPage.vue';
 import RegisterPage from './../views/user/register/RegisterPage.vue';
 import HomePage from './../views/user/home/HomePage.vue';
 import QuestionPage from '../views/admin/question/QuestionPage.vue';
-import QuestionUserPage from '../views/admin/question/QuestionPage.vue';
+import QuestionUserPage from '../views/user/question/QuestionPage.vue';
 
 const routes = [
     {
@@ -35,7 +35,7 @@ const routes = [
                 component: HomePage,
             },
             {
-                path: 'questions',
+                path: 'question',
                 component: QuestionUserPage,
             },
             {

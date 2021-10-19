@@ -5,21 +5,21 @@
                 <router-link class="nav_item" to="/home">
                     <span>Home</span>
                 </router-link>
-                <router-link class="nav_item" to="/questions">Mes Questions</router-link>
+                <router-link v-if="user" class="nav_item" to="/question">Mes Questions</router-link>
             </div>
             <div v-if="!user" class="slot_end">
                 <router-link class="nav_item" to="/register">register</router-link>
                 <router-link class="nav_item" to="/login">login</router-link>
             </div>
             <div v-if="user" class="slot_end">
-                <div @click.prevent.stop="toggleUserAction" class="avatar">
+                <div @click.prevent.stop.exact="toggleUserAction" class="avatar">
                     <img :src="'https://eu.ui-avatars.com/api/?name=' + user.pseudo" alt="" srcset="" />
 
                     <div v-if="showUserAction" class="user_action">
-                        <a @click.prevent.stop="toggleUserAction" class="user_action_item text_dark">
+                        <a @click.prevent.stop.exact="toggleUserAction" class="user_action_item text_dark">
                             Mon compte
                         </a>
-                        <a @click.prevent.stop="signOut" class="user_action_item text_danger">
+                        <a @click.prevent.stop.exact="signOut" class="user_action_item text_danger">
                             Déconnexion
                         </a>
                     </div>
@@ -40,7 +40,7 @@ import { User } from '../../models/user';
 export default {
     date() {
         return {
-            user: null,
+            user: undefined,
         };
     },
     methods: {

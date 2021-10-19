@@ -8,14 +8,14 @@
                 <router-link class="nav_item" to="/admin/question">Questions</router-link>
             </div>
             <div class="slot_end">
-                <div @click.prevent.stop="toggleUserAction" class="avatar">
+                <div @click.prevent.stop.exact="toggleUserAction" class="avatar">
                     <img :src="'https://eu.ui-avatars.com/api/?name=' + user.pseudo" alt="" srcset="" />
 
                     <div v-if="showUserAction" class="user_action">
-                        <a @click.prevent.stop="toggleUserAction" class="user_action_item text_dark">
+                        <a @click.prevent.stop.exact="toggleUserAction" class="user_action_item text_dark">
                             Mon compte
                         </a>
-                        <a @click.prevent.stop="signOut" class="user_action_item text_danger">
+                        <a @click.prevent.stop.exact="signOut" class="user_action_item text_danger">
                             Déconnexion
                         </a>
                     </div>
@@ -64,7 +64,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
 .ul_headear {
     height: 64px;
     padding: 16px 0;

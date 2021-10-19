@@ -25,7 +25,6 @@ export class ModelBase {
                 }
             }
             if (typeof obj == 'object') {
-                console.log('object asign');
                 Object.assign(this, obj);
             } else {
                 console.warn('[HibouLib.ModalBase - instanciate] This variable is not an object:', obj);
