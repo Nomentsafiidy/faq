@@ -50,6 +50,27 @@
     border: 1px solid #45b5ff;
 }
 
+.textarea {
+    border: 1px #999999 solid;
+    background: transparent;
+    color: #333333;
+    font-size: 14px;
+    padding: 0.7em 1.1em;
+    border-radius: 3px;
+    line-height: 20px;
+    &:focus {
+        outline-style: solid;
+    }
+}
+
+.textarea:focus-visible {
+    outline: none;
+}
+
+.textarea:focus {
+    border: 1px solid #45b5ff;
+}
+
 .input_group {
     margin-bottom: 16px;
 }

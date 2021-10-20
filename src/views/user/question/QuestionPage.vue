@@ -1,8 +1,9 @@
 <template>
     <div class="q_container">
+        <QuestionForm ref="questionForm" />
         <div class="q_header">
             <h3>Question</h3>
-            <button class="btn btn_primary">Nouveau</button>
+            <button @click="onOpenQuestionForm" class="btn btn_primary">Nouveau</button>
         </div>
         <div class="question_list">
             <!-- TODO -->
@@ -15,9 +16,18 @@
 
 <script>
 import QuestionItem from './../../../components/question-item/QuestionItem';
+import QuestionForm from '../../../components/question-form/QuestionForm.vue';
+
 export default {
     components: {
         QuestionItem,
+        QuestionForm,
+    },
+    methods: {
+        onOpenQuestionForm() {
+            console.log(this.$refs);
+            this.$refs.questionForm.openQuestionForm();
+        },
     },
 };
 </script>
