@@ -12,8 +12,7 @@
         <div v-if="question.response && question.response.content && reply === false" class="answer">
             <h3>Reponse :</h3>
             <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae eos fuga maiores placeat minus provident asperiores, quia,
-                laudantium tempore sapiente eligendi. In quos quo tenetur labore libero voluptates ut. Quasi.
+                {{ question.response.content }}
             </p>
         </div>
     </div>
