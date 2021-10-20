@@ -5,19 +5,31 @@
             <button class="btn btn_primary">Rechercher</button>
         </div>
         <div class="question_list">
-            <!-- TODO -->
-            <QuestionItem />
-            <QuestionItem />
-            <QuestionItem />
+            <QuestionItem v-for="(question, index) in questionList" v-bind:key="index" :question="question" />
         </div>
     </div>
 </template>
 
 <script>
 import QuestionItem from './../../../components/question-item/QuestionItem';
+import { getQuestionWithResponse } from '../../../firebase/firebase';
+
 export default {
+    data() {
+        return {
+            questionList: [],
+        };
+    },
     components: {
         QuestionItem,
+    },
+    methods: {
+        getQuestions: async function () {
+            this.questionList = await getQuestionWithResponse(this.$route.params.userId);
+        },
+    },
+    mounted() {
+        this.getQuestions();
     },
 };
 </script>
