@@ -1,15 +1,12 @@
 <template>
     <div class="q_container">
-        <QuestionForm ref="questionForm" />
+        <QuestionForm @newQuestion="onNewQuestion" ref="questionForm" />
         <div class="q_header">
             <h3>Question</h3>
             <button @click="onOpenQuestionForm" class="btn btn_primary">Nouveau</button>
         </div>
         <div class="question_list">
-            <!-- TODO -->
-            <QuestionItem />
-            <QuestionItem />
-            <QuestionItem />
+            <QuestionItem v-for="(question, index) in questionList" v-bind:key="index" :question="question" />
         </div>
     </div>
 </template>
@@ -17,8 +14,14 @@
 <script>
 import QuestionItem from './../../../components/question-item/QuestionItem';
 import QuestionForm from '../../../components/question-form/QuestionForm.vue';
+import { getQuestionByUserId } from '../../../firebase/firebase';
 
 export default {
+    data() {
+        return {
+            questionList: [],
+        };
+    },
     components: {
         QuestionItem,
         QuestionForm,
@@ -28,6 +31,15 @@ export default {
             console.log(this.$refs);
             this.$refs.questionForm.openQuestionForm();
         },
+        onNewQuestion(question) {
+            this.questionList.push(question);
+        },
+        getQuestions: async function () {
+            this.questionList = await getQuestionByUserId(this.$route.params.userId);
+        },
+    },
+    mounted() {
+        this.getQuestions();
     },
 };
 </script>

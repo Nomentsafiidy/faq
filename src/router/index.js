@@ -35,7 +35,7 @@ const routes = [
                 component: HomePage,
             },
             {
-                path: 'question',
+                path: 'question/:userId',
                 component: QuestionUserPage,
             },
             {

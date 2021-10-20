@@ -5,7 +5,7 @@
                 <router-link class="nav_item" to="/home">
                     <span>Home</span>
                 </router-link>
-                <router-link v-if="user" class="nav_item" to="/question">Mes Questions</router-link>
+                <router-link v-if="user" class="nav_item" :to="'/question/' + user.id">Mes Questions</router-link>
             </div>
             <div v-if="!user" class="slot_end">
                 <router-link class="nav_item" to="/register">register</router-link>

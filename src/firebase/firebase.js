@@ -1,9 +1,10 @@
 import * as firebaseApp from 'firebase/app';
-import { getFirestore, collection, getDoc, doc, setDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDoc, doc, setDoc, addDoc, query, where, getDocs } from 'firebase/firestore/lite';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { ref, onUnmounted } from 'vue';
 
 import { User } from '../models/user';
+import { Question } from '../models/question';
 
 const config = {
     apiKey: 'AIzaSyCc3mYYqxbIdVjRGbJBu8o_IYJhCrmpkkM',
@@ -59,6 +60,71 @@ export const useLoadUsers = () => {
 };
 
 export const auth = getAuth(app);
+
+//Question
+export const saveQuestionToCollection = async (question) => {
+    const docRef = await addDoc(collection(db, 'questions'), {
+        content: question.content ? question.content : '',
+        createdAt: question.createdAt,
+        id: question.id ? question.id : '',
+        response: question.response ? question.response : '',
+        updatedAt: question.updatedAt,
+        userId: question.userId,
+    });
+    question.id = docRef.id;
+    return question;
+};
+
+export const getQuestionByUserId = async (userId) => {
+    const q = query(collection(db, 'questions'), where('userId', '==', userId));
+    const querySnapshot = await getDocs(q);
+    const questionList = [];
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, ' => ', doc.data());
+        questionList.push(
+            new Question({
+                ...doc.data(),
+                id: doc.id,
+            })
+        );
+    });
+    return questionList;
+};
+
+export const getQuestionWithoutResponse = async () => {
+    const q = query(collection(db, 'questions'), where('response', '==', ''));
+    const querySnapshot = await getDocs(q);
+    const questionList = [];
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, ' => ', doc.data());
+        questionList.push(
+            new Question({
+                ...doc.data(),
+                id: doc.id,
+            })
+        );
+    });
+    return questionList;
+};
+
+export const getQuestionWithResponse = async () => {
+    const q = query(collection(db, 'questions'), where('response', '!=', ''));
+    const querySnapshot = await getDocs(q);
+    const questionList = [];
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, ' => ', doc.data());
+        questionList.push(
+            new Question({
+                ...doc.data(),
+                id: doc.id,
+            })
+        );
+    });
+    return questionList;
+};
 
 //Fire Auth
 export const signUp = async (user) => {

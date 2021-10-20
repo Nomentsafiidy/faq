@@ -5,7 +5,7 @@
             <h3>Question</h3>
             <form @submit.prevent="onAddQuestion">
                 <div class="input_group">
-                    <textarea v-model="question" class="textarea" placeholder="votre question" id="" cols="30" rows="10"></textarea>
+                    <textarea v-model="question" class="textarea" placeholder="votre question" id="" cols="30" rows="7"></textarea>
                 </div>
                 <div>
                     <button class="btn btn_primary" type="submit">Soumettre</button>
@@ -18,6 +18,8 @@
 <script>
 import { Question } from '../../models/question';
 
+import { saveQuestionToCollection } from '../../firebase/firebase';
+
 export default {
     data() {
         return {
@@ -29,12 +31,18 @@ export default {
         onCloseModal() {
             this.open = false;
         },
-        onAddQuestion() {
-            const tmpQuestion = new Question({
-                content: this.question,
-            });
-            console.log('tmpQuestion =>', tmpQuestion);
-            this.open = false;
+        onAddQuestion: async function () {
+            try {
+                const tmpQuestion = new Question({
+                    content: this.question,
+                    userId: this.$route.params.userId,
+                });
+                const newQuestion = await saveQuestionToCollection(tmpQuestion);
+                this.$emit('newQuestion', newQuestion);
+                this.open = false;
+            } catch (error) {
+                console.log('error => ', error);
+            }
         },
         openQuestionForm() {
             console.log('open call');

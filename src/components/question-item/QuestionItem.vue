@@ -1,10 +1,9 @@
 <template>
-    <div class="qi_container">
+    <div v-if="question" class="qi_container">
         <div class="question">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, perferendis soluta accusantium assumenda quod sequi possimus quidem enim
-            facilis expedita?
+            {{ question.content }}
         </div>
-        <div class="answer">
+        <div v-if="question.response && question.response.content" class="answer">
             <h3>Reponse :</h3>
             <p>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae eos fuga maiores placeat minus provident asperiores, quia,
@@ -15,7 +14,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+    props: {
+        question: Object,
+    },
+};
 </script>
 
 <style scoped>
