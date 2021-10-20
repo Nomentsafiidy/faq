@@ -1,7 +1,7 @@
 <template>
     <div class="q_container">
         <div class="question_list">
-            <QuestionItem v-for="(question, index) in questionList" v-bind:key="index" :question="question" />
+            <QuestionItem v-for="(question, index) in questionList" v-bind:key="index" :question="question" :reply="true" @replied="onReplied" />
         </div>
     </div>
 </template>
@@ -22,6 +22,13 @@ export default {
     methods: {
         getQuestions: async function () {
             this.questionList = await getQuestionWithoutResponse(this.$route.params.userId);
+        },
+        onReplied(question) {
+            this.questionList = this.questionList.filter((q) => {
+                if (q.id !== question.id) {
+                    return q;
+                }
+            });
         },
     },
     mounted() {

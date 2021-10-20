@@ -1,5 +1,5 @@
 import * as firebaseApp from 'firebase/app';
-import { getFirestore, collection, getDoc, doc, setDoc, addDoc, query, where, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDoc, doc, setDoc, addDoc, query, where, getDocs, updateDoc } from 'firebase/firestore/lite';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { ref, onUnmounted } from 'vue';
 
@@ -124,6 +124,15 @@ export const getQuestionWithResponse = async () => {
         );
     });
     return questionList;
+};
+
+export const updateQuestion = async (question) => {
+    console.log('question => ', question);
+    const Ref = doc(db, 'questions', question.id);
+    await updateDoc(Ref, {
+        ...question,
+        response: { ...question.response },
+    });
 };
 
 //Fire Auth
